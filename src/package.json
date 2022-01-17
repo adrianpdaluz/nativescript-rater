@@ -1,77 +1,93 @@
 {
-    "name": "nativescript-rater",
-    "version": "3.0.0",
-    "description": "Reminds your app's users to review the app through PlayStore or AppStore. Love it, rate it!",
-    "main": "rater",
-    "typings": "index.d.ts",
-    "nativescript": {
-        "platforms": {
-            "android": "5.0.0",
-            "ios": "5.0.0"
-        }
+  "name": "@planbook/nativescript-rater",
+  "version": "1.0.0",
+  "description": "Reminds your app's users to review the app through PlayStore or AppStore. Love it, rate it!",
+  "main": "rater",
+  "typings": "index.d.ts",
+  "nativescript": {
+    "platforms": {
+      "android": "6.0.0",
+      "ios": "6.0.0"
     },
-    "scripts": {
-        "tsc": "tsc",
-        "build": "npm run tsc && npm run build.native",
-        "build.native": "node scripts/build-native.js",
-        "postclone": "npm i && node scripts/postclone.js && cd ../demo && npm i && npx rimraf -- package-lock.json && cd ../src",
-        "test.android": "npm run tsc && npm run tslint && cd ../demo && tns build android && tns test android --justlaunch",
-        "test.ios": "npm run tsc && npm run tslint && cd ../demo && tns build ios && tns test ios --justlaunch",
-        "tslint": "cd .. && tslint \"**/*.ts\" --config tslint.json --exclude \"**/node_modules/**\"",
-        "plugin.tscwatch": "npm run tsc -- -w",
-        "demo.ios": "npm run tsc && cd ../demo && tns run ios",
-        "demo.android": "npm run tsc && cd ../demo && tns run android",
-        "demo.reset": "cd ../demo && npx rimraf -- hooks node_modules platforms package-lock.json",
-        "plugin.prepare": "npm run build && cd ../demo && tns plugin remove nativescript-rater && tns plugin add ../src",
-        "clean": "npm run demo.reset && npx rimraf -- node_modules package-lock.json && npm i",
-        "ci.tslint": "npm i && tslint '**/*.ts' --config '../tslint.json' --exclude '**/node_modules/**'",
-        "prepack": "npm run build.native",
-        "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0"
-    },
-    "keywords": [
-        "NativeScript",
-        "JavaScript",
-        "Typescript",
-        "Angular",
-        "Android",
-        "iOS",
-        "rate",
-        "rating",
-        "rater",
-        "app"
-    ],
-    "author": {
-        "name": "Gogoout",
-        "email": "gogoout@gmail.com"
-    },
-    "contributors": [
-        {
-            "name": "Shiva Prasad",
-            "email": "sp@shiv19.com",
-            "url": "https://shiv19.com"
-        }
-    ],
-    "bugs": {
-        "url": "https://github.com/gogoout/nativescript-rater/issues"
-    },
-    "license": "MIT",
-    "homepage": "https://github.com/gogoout/nativescript-rater",
-    "readmeFilename": "README.md",
-    "devDependencies": {
-        "cz-conventional-changelog": "^2.1.0",
-        "prompt": "^1.0.0",
-        "rimraf": "^2.6.2",
-        "semver": "^5.6.0",
-        "tns-core-modules": "^6.0.1",
-        "tns-platform-declarations": "^6.0.0",
-        "tslint": "^5.11.0",
-        "typescript": "~2.8.2"
-    },
-    "dependencies": {},
-    "bootstrapper": "nativescript-plugin-seed",
-    "config": {
-        "commitizen": {
-            "path": "./src/node_modules/cz-conventional-changelog"
-        }
+    "plugin": {
+      "nan": "true",
+      "pan": "true",
+      "vue": "true",
+      "core3": "true",
+      "category": "Interface"
     }
+  },
+  "scripts": {
+    "tsc": "tsc -skipLibCheck",
+    "build": "npm i && ts-patch install && npm run tsc",
+    "postclone": "npm i && node scripts/postclone.js && cd ../demo && npm i && cd ../src && npm run plugin.link",
+    "test.android": "npm i && npm run tsc && npm run tslint && cd ../demo && tns build android && tns test android --justlaunch",
+    "test.ios": "npm i && npm run tsc && npm run tslint && cd ../demo && tns build ios && tns test ios --justlaunch",
+    "tslint": "cd .. && tslint \"**/*.ts\" --config tslint.json --exclude \"**/node_modules/**\"",
+    "plugin.link": "npm link && cd ../demo && npm link nativescript-modal-datetimepicker && cd ../src",
+    "plugin.tscwatch": "npm run tsc -- -w",
+    "debug.ios": "npm i && npm run tsc && cd ../demo && tns debug ios",
+    "demo.ios": "npm i && npm run tsc && cd ../demo && tns run ios",
+    "demo.android": "npm i && npm run tsc && cd ../demo && tns run android",
+    "demo.reset": "cd ../demo && rimraf platforms",
+    "plugin.prepare": "npm run tsc && cd ../demo && tns plugin remove nativescript-modal-datetimepicker && tns plugin add ../src",
+    "clean": "cd ../demo && rimraf hooks node_modules platforms && cd ../src && rimraf node_modules && npm run plugin.link",
+    "ci.tslint": "npm i && tslint '**/*.ts' --config '../tslint.json' --exclude '**/node_modules/**'",
+    "precommit": "lint-staged",
+    "setup": "npm i && ts-patch install"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "keywords": [
+    "NativeScript",
+    "JavaScript",
+    "Typescript",
+    "Angular",
+    "Android",
+    "iOS",
+    "rate",
+    "rating",
+    "rater",
+    "app"
+  ],
+  "author": "Gogoout <gogoout@gmail.com>",
+  "contributors": [
+    "Shiva Prasad <sp@shiv19.com> (https://shiv19.com)"
+  ],
+  "bugs": {
+    "url": "https://github.com/gogoout/nativescript-rater/issues"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/gogoout/nativescript-rater",
+  "devDependencies": {
+    "cz-conventional-changelog": "^2.1.0",
+    "prompt": "^1.0.0",
+    "semver": "^5.6.0",
+    "tns-platform-declarations": "^6.0.0",
+    "@nativescript/core": "^7.0.3",
+    "@nativescript/types": "~7.0.3",
+    "@nativescript/webpack": "^3.0.4",
+    "lint-staged": "^7.3.0",
+    "prettier": "^2.1.2",
+    "rimraf": "^3.0.2",
+    "ts-node": "^9.0.0",
+    "ts-patch": "^1.3.0",
+    "tslint": "^6.1.3",
+    "typescript": "~3.9.0"
+  },
+  "dependencies": {},
+  "bootstrapper": "nativescript-plugin-seed",
+  "config": {
+    "commitizen": {
+      "path": "./src/node_modules/cz-conventional-changelog"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adrianpdaluz/nativescript-rater.git"
+  }
 }
